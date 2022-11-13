@@ -18,13 +18,14 @@ const CoursesContextProvider = ({ children }) => {
     const [coursesState, coursesDispatch] = useReducer(coursesReducer, initialCoursesState)
 
     useEffect(() => {
-        const asyncData = async () => {
-            const coursesFromDB = await getAllCourses()
-            coursesDispatch(setCourses(coursesFromDB))
+        const getAndSetAsyncData = async () => {
+            const courses = await getAllCourses()
+            coursesDispatch(setCourses(courses))
         }
 
         if (loginState.user)
-            asyncData()
+            getAndSetAsyncData()
+
     }, [loginState])
 
     return (
